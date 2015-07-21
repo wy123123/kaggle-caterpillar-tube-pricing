@@ -110,12 +110,10 @@ n.data <- subset(validation,select=-c(cost))
 #train 10 trees for feature selection using randomForest package without CV
 fit.RF <- randomForest(cost~.,data=train, ntree = 10,replace = T,do.trace = F)
 
-
 #training with CV using CARET
 caret.fit.rf <- train(cost~.,data=train,method = "rf",trControl=trainControl(method ="cv")
 
-
-#log error estimates
+#log error estimation
 n <- dim(validation)[1]
 prediction <- predict(fit.RF, newdata=n.data)
 actual <- validation$cost
