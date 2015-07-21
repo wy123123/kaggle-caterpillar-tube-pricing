@@ -13,7 +13,7 @@ set.seed(123)
 tube<- read.csv("tube.csv")
 supplier <- read.csv("train_set.csv")
 
-#bill material, it is the main features to differentiate one tube from another
+#bill material, these are the main features to differentiate one tube from another
 bill_material <- read.csv("bill_of_materials.csv")
 bill_1 <- bill_material[,1:3]
 bill_2 <- bill_material[,c(1,4,5)]
