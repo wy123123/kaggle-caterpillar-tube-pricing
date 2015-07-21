@@ -1,5 +1,5 @@
 #caterpiller competition
-#To build a classifilier of product
+#To build price prediction model.
 library(caret)
 library(reshape2)
 library(dplyr)
