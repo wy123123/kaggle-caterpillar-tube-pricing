@@ -13,6 +13,9 @@ set.seed(123)
 tube<- read.csv("tube.csv")
 supplier <- read.csv("train_set.csv")
 
+#test set 
+testset <- read.cs("test_set.csv")
+
 #bill material, these are the main features to differentiate one tube from another
 bill_material <- read.csv("bill_of_materials.csv")
 bill_1 <- bill_material[,1:3]
@@ -51,6 +54,11 @@ dim(temp_matrix)#check dimensions
 tube <- cbind(tube,temp_matrix)
 #remove material_id
 tube <- tube[,-2]
+
+#combine test and training set
+testset$cost <-0
+testset <- testset[,-1]#remove id column
+supplier <- rbind(supplier, testset)
 
 #expand supplier feature
 temp <- model.matrix.lm(tube_assembly_id~0+supplier,data = supplier)
@@ -98,6 +106,17 @@ xnam <- colnames(finals)
 kk <- gsub(" ","",xnam)
 kk <- gsub("\\-","_",xnam)
 setnames(finals,kk)
+
+#seperate testing and training set
+test <- finals[finals$cost==0,]
+training <- finals[finals$cost!=0,]
+
+#randomforest regression
+##create training set and validation set
+intrain <- createDataPartition(y=training$cost,p=0.8,list=F)
+train <-training[intrain,] 
+validation <- training[-intrain,]
+n.data <- subset(validation,select=-c(cost))
 
 #randomforest regression
 ##create training set and validation set, 80% training set, 20% testing set
