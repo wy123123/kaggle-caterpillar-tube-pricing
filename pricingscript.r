@@ -127,7 +127,7 @@ validation <- finals[-intrain,]
 n.data <- subset(validation,select=-c(cost))
 
 #train 10 trees for feature selection using randomForest package without CV
-fit.RF <- randomForest(cost~.,data=train, ntree = 10,replace = T,do.trace = F)
+fit.RF <- randomForest(cost~.,data=train, ntree = 200,replace = T,do.trace = F)
 
 #training with CV using CARET
 caret.fit.rf <- train(cost~.,data=train,method = "rf",trControl=trainControl(method ="cv")
